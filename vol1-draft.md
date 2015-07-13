@@ -205,7 +205,7 @@ var counts_by_type = create_tallies(elements, 'moving')
 //   "sleeping": 50
 // }
 ```
-That `counts` object returned by create_tallies is what we use to create our graph.
+That `counts` object returned by create_tallies is what we use to create our initial DOM elements in our graph.  Every key in the counts object will have a corresponding DOM element.
 
 ### create_graph(counts)
 ```javascript
@@ -259,9 +259,9 @@ The visualization code here is not very graphical.  Running this code produces a
     * initialize the html with `-1`
   4. push the `parent` div and the `count` span on some selectors arrays
 
-We `push` the `count` span on the `update_selectors` array because the `update_elements` function will iterate over all the `update_selectors` elements and call the `.html()` function with the correct values.
+We `push` the `count` span on the `update_selectors` array because the `update_elements` function will iterate over each selector in that array and call the `.html()` function with the correct values.  Meaning, `update_elements` will fix the content of all the spans going from the initial `-1` to the accurate value.
 
-When we call the `.datum()` function on the `div_parent` and `span_count` variables, it is because we are going use the `key_name` associated with the element to access the data related to that element in the `update_elements` function.
+When we call the `.datum()` function on the `div_parent` and `span_count` objects, it is because we are going use the `key_name` associated with the element to access the data for that element in the tallies in the `update_elements` function.
 
 ### update_elements()
 ```javascript
@@ -301,4 +301,4 @@ function module(data,category){
 
 * * *
 
-When we created
+When we created our graph we pushed our `span_count` objects onto the `update_selectors` array.  Because this span contains a value that will change later due to mouse events we want to keep.
