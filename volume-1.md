@@ -1,4 +1,4 @@
-![d3js-design-pattern](https://cloud.githubusercontent.com/assets/432483/8650852/74a15622-292a-11e5-9b65-11a09536440e.png)
+![d3js-design-pattern](https://cloud.githubusercontent.com/assets/432483/8653811/604420fe-293b-11e5-8f3d-e0e6f2cadee5.png)
 
 # intro & theory
 
@@ -256,7 +256,7 @@ We `push` the `count` span on the `update_selectors` array because the `update_e
 
 When we call the `.datum()` function on the `div_parent` and `span_count` objects, it is because we are going use the `key_name` associated with the element to access the data for that element in the tallies in the `update_elements` function.
 
-### update_elements()
+### update_elements(data)
 
 ```javascript
 function chart(data,category){
@@ -325,4 +325,4 @@ Another benefit of this modularization technique is that a `chartA.js` and a `ch
 
 Everything relevant about that graph is contained in the object that `chart.js` returns.  If you need something extra in `main.js`, put it in that object.
 
-![d3js-design-pattern](https://cloud.githubusercontent.com/assets/432483/8650852/74a15622-292a-11e5-9b65-11a09536440e.png)
+![d3js-design-pattern](https://cloud.githubusercontent.com/assets/432483/8653811/604420fe-293b-11e5-8f3d-e0e6f2cadee5.png)
