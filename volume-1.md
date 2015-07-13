@@ -1,4 +1,4 @@
-![d3js-design-pattern](https://cloud.githubusercontent.com/assets/432483/8653811/604420fe-293b-11e5-8f3d-e0e6f2cadee5.png)
+![d3js-design-pattern](https://cloud.githubusercontent.com/assets/432483/8653869/c78d15e0-293b-11e5-8167-4eaed96b7048.png)
 
 # intro & theory
 
@@ -325,4 +325,4 @@ Another benefit of this modularization technique is that a `chartA.js` and a `ch
 
 Everything relevant about that graph is contained in the object that `chart.js` returns.  If you need something extra in `main.js`, put it in that object.
 
-![d3js-design-pattern](https://cloud.githubusercontent.com/assets/432483/8653811/604420fe-293b-11e5-8f3d-e0e6f2cadee5.png)
+![d3js-design-pattern](https://cloud.githubusercontent.com/assets/432483/8653869/c78d15e0-293b-11e5-8167-4eaed96b7048.png)
