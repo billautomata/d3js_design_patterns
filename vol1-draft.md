@@ -8,8 +8,10 @@ Implementing the features of the [revealing module pattern](http://addyosmani.co
 
 The goal of the pattern is to enable you to design self-contained interactive graphs that only expose useful elements to the parent scope.
 
-
 # code & application
+
+
+
 Our source data is a flat array fresh from the JSON API server.
 
 ```javascript
@@ -318,16 +320,18 @@ function module(data,category){
 
 }
 ```
-The `module` function returns an object that is a portal (a closure) to the scope of the module to the parent scope.  This returned object contains a reference to an array of DOM elements you want to attach touch and mouse event code to.  The closure also contains a reference to a function that, when passed a similarly structured data array, will parse out the relevant information and update the appropriate elements without having to be told anything about what it needs to go find.
+The `module` function returns an object that is effectively a portal (a closure) from the parent scope to the important stuff in the module scope.  This returned object contains a reference to an array of DOM elements you want to attach touch and mouse event code to.  The closure also contains a reference to a function that, when passed a similarly structured data array, will parse out the relevant information and update the appropriate elements without having to be told anything about what it needs to go find.
 
-This closure is powerful because you don't need to keep a reference to all the elements you want to update when the data changes.  
+This closure is powerful because you don't need to know anything about the DOM elements you want to update when the data changes.  
 
 You don't need to call functions that look like `d3.selectAll('g#foo').selectAll('text#bar')...`.  
 
-You can pass your new data to the returned `update` function and `update` knows what to do.
+You just pass your new data to the returned `update` function and `update` knows what to do.
 
 If you want to use the same chart twice on a page, the closure protects the two graphs from contaminating the global state and thus ruining the ability to update the elements in only one instance of the graph.  
 
-Another benefit of this modularization technique is that `moduleA.js` and `moduleB.js` do not need to know about each other in order to be glued together in `main.js`.  If the `module.js` code returns everything needed to attach mouse events and update itself with similar looking input data, then `main.js` has an easier time of organizing things.  Everything relevant about that graph is contained in that returned object.
+Another benefit of this modularization technique is that a `moduleA.js` and a `moduleB.js` do not need to know about each other in order to be glued together in `main.js`.  If the `module.js` code returns everything needed to attach mouse events and update itself with similar looking input data, then `main.js` has an easier time of organizing things.  
 
-![d3js-design-pattern](https://cloud.githubusercontent.com/assets/432483/8642770/a0e383b4-28de-11e5-9a53-3df76f077c5e.png)
+Everything relevant about that graph is contained in the object that `module.js` returns.  If you need something extra in `main.js`, put it in that object.
+
+![d3js-design-pattern](https://cloud.githubusercontent.com/assets/432483/8643257/5ccc22a0-28e6-11e5-9e74-849f6edb2382.png)
