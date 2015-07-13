@@ -1,3 +1,5 @@
+![d3js-design-pattern](https://cloud.githubusercontent.com/assets/432483/8650852/74a15622-292a-11e5-9b65-11a09536440e.png)
+
 # intro & theory
 
 Larger interactive d3 programs can be difficult to organize.  After all your elements are on the screen you want to glue them together inside event callbacks.  The conventional methods of calling `d3.selectAll()` against a large DOM tree end up resulting in a lot of additional code to make sure your selections are accurate.  This is especially true if your goal is re-usable components that would put multiple identical graph types on the screen (`small multiples` or `sparklines`).
@@ -323,4 +325,4 @@ Another benefit of this modularization technique is that a `chartA.js` and a `ch
 
 Everything relevant about that graph is contained in the object that `chart.js` returns.  If you need something extra in `main.js`, put it in that object.
 
-![d3js-design-pattern](https://cloud.githubusercontent.com/assets/432483/8643257/5ccc22a0-28e6-11e5-9e74-849f6edb2382.png)
+![d3js-design-pattern](https://cloud.githubusercontent.com/assets/432483/8650852/74a15622-292a-11e5-9b65-11a09536440e.png)
