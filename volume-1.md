@@ -58,13 +58,9 @@ of the values for each of the categories in the data: `color` and `moving`.
 * _flying_ **5**
 * _sleeping_ **50**
 
-* * *
-
 The useful part of the interface is that the client wants to be able to
 hover over any element in the list and have everything else in the page update
 itself to display new values based on the hovered context.
-
-* * *
 
 `example interaction behavior`
 
@@ -77,12 +73,8 @@ for only game objects that are blue.
 * _flying_ **1** _-updated-_
 * _sleeping_ **18** _-updated-_
 
-* * *
-
 _note_ I'm purposefully leaving out any SVG related code in this d3 article.  
 I am just going to stick with HTML elements `div` and `span` to reduce the focus on the graphics themselves and shift the focus to the code architecture that generates the elements, handles events for those elements, and performs visual updates on those elements.
-
-* * *
 
 # setup, draw, update
 
