@@ -10,7 +10,7 @@ The goal of the pattern is to enable you to design self-contained interactive gr
 
 # code & application
 
-
+http://codepen.io/billautomata/pen/WvJvGL
 
 Our source data is a flat array fresh from the JSON API server.
 
@@ -132,13 +132,10 @@ In this function `create_chart` we defined three new functions `create_tallies` 
 
 ```javascript
 function module(data,category){
-
   // define the function
   function create_tallies(data) {
-
     // create an empty object
     var return_counts = {}
-
     // iterate over each element in the array
     data.forEach(function(element) {
 
