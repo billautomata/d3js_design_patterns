@@ -199,13 +199,13 @@ var counts_by_color = create_tallies(elements, 'color')
 //   "green": 32
 // }
 
-var counts_by_type = create_tallies(elements, 'moving')
+var counts_by_moving = create_tallies(elements, 'moving')
 // {
 //   "flying": 5,
 //   "sleeping": 50
 // }
 ```
-That `counts` object returned by create_tallies is what we use to create our initial DOM elements in our graph.  Every key in the counts object will have a corresponding DOM element.
+That `counts` object returned by create_tallies is what we use to create our initial DOM elements in our graph.  Every key in the counts object (`flying` `sleeping`) will have a corresponding DOM element.
 
 ### create_graph(counts)
 ```javascript
@@ -264,8 +264,8 @@ We `push` the `count` span on the `update_selectors` array because the `update_e
 When we call the `.datum()` function on the `div_parent` and `span_count` objects, it is because we are going use the `key_name` associated with the element to access the data for that element in the tallies in the `update_elements` function.
 
 ### update_elements()
-```javascript
 
+```javascript
 function module(data,category){
 
   // create_tallies code...
@@ -299,6 +299,35 @@ function module(data,category){
     * true - set the displayed value using the `.html()` function to the value in the counts object for that key
     * false - set the displayed value using the `.html()` function to zero
 
-* * *
+When we created our graph we pushed the `span_count` objects we created onto the `update_selectors` array.  We knew to save them on the array because this span holds the value that will change later during mouse events.
 
-When we created our graph we pushed our `span_count` objects onto the `update_selectors` array.  Because this span contains a value that will change later due to mouse events we want to keep.
+
+### the closure
+
+```javascript
+function module(data,category){
+
+  // create_tallies code...
+  // create_graphs code...
+  // update_elements code...
+
+  return {
+    selectors: parent_selectors,
+    update: update_elements
+  }
+
+}
+```
+The `module` function returns an object that is a portal (a closure) to the scope of the module to the parent scope.  This returned object contains a reference to an array of DOM elements you want to attach touch and mouse event code to.  The closure also contains a reference to a function that, when passed a similarly structured data array, will parse out the relevant information and update the appropriate elements without having to be told anything about what it needs to go find.
+
+This closure is powerful because you don't need to keep a reference to all the elements you want to update when the data changes.  
+
+You don't need to call functions that look like `d3.selectAll('g#foo').selectAll('text#bar')...`.  
+
+You can pass your new data to the returned `update` function and `update` knows what to do.
+
+If you want to use the same chart twice on a page, the closure protects the two graphs from contaminating the global state and thus ruining the ability to update the elements in only one instance of the graph.  
+
+Another benefit of this modularization technique is that `moduleA.js` and `moduleB.js` do not need to know about each other in order to be glued together in `main.js`.  If the `module.js` code returns everything needed to attach mouse events and update itself with similar looking input data, then `main.js` has an easier time of organizing things.  Everything relevant about that graph is contained in that returned object.
+
+![d3js-design-pattern](https://cloud.githubusercontent.com/assets/432483/8642770/a0e383b4-28de-11e5-9a53-3df76f077c5e.png)
