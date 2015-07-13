@@ -4,7 +4,7 @@ Larger interactive d3 programs can be difficult to organize.  After all your ele
 
 The use of closures will allow you to expose only the elements you want to attach to mouse and touch events, and provide an interface for updating your DOM elements from a parent scope downstream in your code.
 
-Implementing the features of the [revealing module pattern](http://addyosmani.com/resources/essentialjsdesignpatterns/book/#revealingmodulepatternjavascript) you write a function that creates its DOM elements and returns a closure around them. The closure gives you access to those elements of the graph without having to set up some kind of book-keeping for later selecting by `id` and `class` attributes.  The closure also gives you a function that when passed a new dataset, will update all the pertinent elements in the chart.
+Implementing the features of the [revealing module pattern](http://addyosmani.com/resources/essentialjsdesignpatterns/book/#revealingmodulepatternjavascript) you write a function that creates DOM elements and returns a closure around them. The closure gives you access to those elements of the graph without having to set up some kind of book-keeping for later selecting by `id` and `class` attributes.  The closure also gives you a function that when passed a new dataset, will update all the pertinent elements in the chart.
 
 The goal of the pattern is to enable you to design self-contained interactive graphs that only expose useful elements to the parent scope.
 
@@ -96,7 +96,7 @@ What makes this design pattern useful is that the function returns the elements 
 
 ##### psuedo-code
 ```javascript
-function module(dataset (array), category (string)){
+function chart(dataset (array), category (string)){
 
   // setup
   function create_tallies(dataset){...}
@@ -118,12 +118,12 @@ function module(dataset (array), category (string)){
 }
 ```
 
-In this function `create_chart` we defined three new functions `create_tallies` `create_graph` and `update_elements`.
+In this function `chart` we defined three new functions `create_tallies` `create_graph` and `update_elements`.
 
 ### create_tallies(data)
 
 ```javascript
-function module(data,category){
+function chart(data,category){
   // define the function
   function create_tallies(data) {
     // create an empty object
@@ -201,7 +201,7 @@ That `counts` object returned by create_tallies is what we use to create our ini
 ### create_graph(counts)
 ```javascript
 
-function module(data,category){
+function chart(data,category){
 
   // create_tallies code...
 
@@ -257,7 +257,7 @@ When we call the `.datum()` function on the `div_parent` and `span_count` object
 ### update_elements()
 
 ```javascript
-function module(data,category){
+function chart(data,category){
 
   // create_tallies code...
   // create_graphs code...
@@ -296,7 +296,7 @@ When we created our graph we pushed the `span_count` objects we created onto the
 ### the closure
 
 ```javascript
-function module(data,category){
+function chart(data,category){
 
   // create_tallies code...
   // create_graphs code...
@@ -309,7 +309,7 @@ function module(data,category){
 
 }
 ```
-The `module` function returns an object that is effectively a portal (a closure) from the parent scope to the important stuff in the module scope.  This returned object contains a reference to an array of DOM elements you want to attach touch and mouse event code to.  The closure also contains a reference to a function that, when passed a similarly structured data array, will parse out the relevant information and update the appropriate elements without having to be told anything about what it needs to go find.
+The `chart` function returns an object that is effectively a portal (a closure) from the parent scope to the important stuff in the chart scope.  This returned object contains a reference to an array of DOM elements you want to attach touch and mouse event code to.  The closure also contains a reference to a function that, when passed a similarly structured data array, will parse out the relevant information and update the appropriate elements without having to be told anything about what it needs to go find.
 
 This closure is powerful because you don't need to know anything about the DOM elements you want to update when the data changes.  
 
@@ -319,8 +319,8 @@ You just pass your new data to the returned `update` function and `update` knows
 
 If you want to use the same chart twice on a page, the closure protects the two graphs from contaminating the global state and thus ruining the ability to update the elements in only one instance of the graph.  
 
-Another benefit of this modularization technique is that a `moduleA.js` and a `moduleB.js` do not need to know about each other in order to be glued together in `main.js`.  If the `module.js` code returns everything needed to attach mouse events and update itself with similar looking input data, then `main.js` has an easier time of organizing things.  
+Another benefit of this modularization technique is that a `chartA.js` and a `chartB.js` do not need to know about each other in order to be glued together in `main.js`.  If the `chart.js` code returns everything needed to attach mouse events and update itself with similar looking input data, then `main.js` has an easier time of organizing things.  
 
-Everything relevant about that graph is contained in the object that `module.js` returns.  If you need something extra in `main.js`, put it in that object.
+Everything relevant about that graph is contained in the object that `chart.js` returns.  If you need something extra in `main.js`, put it in that object.
 
 ![d3js-design-pattern](https://cloud.githubusercontent.com/assets/432483/8643257/5ccc22a0-28e6-11e5-9e74-849f6edb2382.png)
