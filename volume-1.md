@@ -1,6 +1,8 @@
+# a d3js design pattern
+
 ![d3js-design-pattern](https://cloud.githubusercontent.com/assets/432483/8653869/c78d15e0-293b-11e5-8167-4eaed96b7048.png)
 
-# intro & theory
+## intro & theory
 
 Larger interactive d3 programs can be difficult to organize.  After all your elements are on the screen you want to glue them together inside event callbacks.  The conventional methods of calling `d3.selectAll()` against a large DOM tree end up resulting in a lot of additional code to make sure your selections are accurate.  This is especially true if your goal is re-usable components that would put multiple identical graph types on the screen (`small multiples` or `sparklines`).
 
@@ -10,7 +12,7 @@ Implementing the features of the [revealing module pattern](http://addyosmani.co
 
 The goal of the pattern is to enable you to design self-contained interactive graphs that only expose useful elements to the parent scope.
 
-# code & application
+## code & application
 
 http://codepen.io/billautomata/pen/WvJvGL
 
