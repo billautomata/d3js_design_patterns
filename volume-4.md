@@ -1,10 +1,11 @@
 #d3js and the first-class function
 
-Passing a function as an argument to other functions is a difficult concept to understand for beginners, especially those coming from other languages.  D3 further compounds this fact by making this model integral to the basic pattern, but doesn't force the designer to understand what the heck is going on when they type `function` in the middle of their code.  
+Passing a function as an argument to other functions is a difficult concept to understand for beginners, especially those coming from other languages.  D3 further compounds this difficulty by making the functions-as-arguments model integral to the basic pattern, but doesn't force the designer to understand what the heck is going on when they type `function` in the middle of their code.  
 
-Instead of learning what the underlying code is doing, they just blindly type...
+Instead of learning what the underlying code is doing, some just blindly type...
 
 ```javascript
+// figure 4.1
   // ...
   .append('rect')
   .attr('fill', function(d,i){ return 'brown' })
@@ -19,31 +20,38 @@ This article will try to make sure it doesn't happen again.  We will cover what 
 
 Almost all D3 code takes this form:
 
+[codepen link](http://codepen.io/billautomata/pen/xGmKEW/)
+
 ```javascript
+// figure 4.2
 var p = [ 3, 1, 4, 1, 5]
+
 var svg = d3.select('body').append('svg')
-svg.selectAll('g.foo')
+
+var elements = svg.selectAll('rect#foo')
   .data(p)
   .enter()
-    .append('g').attr('class','foo')
-      .append('rect')
-      .attr('id', 'zomg')
-      .attr('x', function(d,i){
-        return (d*10.0) // what the heck is this?
-      })
-      // ...
+    .append('rect')
+    .attr('id', 'zomg')
+    .attr('x', function(d){
+      return (d*10.0) // what the heck is this?
+    })
+    .attr('y',0).attr('width',4).attr('height',200)
 ```
 
-In the above code we create an `svg` element.  Then append a series of `g` (group) elements to the `svg`. Then append a `rect` element to that group element.  
+In the above code we create an `svg` element.  Then append a series of `rect` elements to the `svg`.
 
-When creating that `rect` element I set the `id` [attribute](https://developer.mozilla.org/en-US/docs/Web/SVG/Attribute) to a string `'zomg'`.  `'zomg'` is a value, like `0` or `true`.  That value is passed as the second argument in the `attr()` call.
+When creating that `rect` element we set the `id` [attribute](https://developer.mozilla.org/en-US/docs/Web/SVG/Attribute) to a string, `'zomg'`.  `'zomg'` is a value, like `0` or `true`.  That value is passed as the second argument in the `attr()` call.
+
+###`attr(name, value)`
 
 In the next line of code where we call `attr` and set the `x` attribute, instead of passing in a value like the number `108.1`, I pass a function as an argument.  
+###`attr(name, function(){ return value })`
+
 ### usually
 
-Usually you write a function ahead of time, then call it later when you need it, right?  You may not have ever passed a function as an argument before.  
-
 ```javascript
+// figure 4.3
 // this is normal-ish looking code
 function add(a,b){
   return (a+b)
@@ -59,6 +67,7 @@ var b = add(8,a)
 I write a function `add`.  Then I use it to add stuff together.
 
 ```javascript
+// figure 4.4
 // this is a little different
 function add(a,b){
   return a() + b()
@@ -68,15 +77,18 @@ var a = add(function(){ return 3 }, function(){ return 1 })
 // a = 4
 ```
 
-The above code is weird.  Why would you ever do this?  There really is no purpose to passing in those functions as arguments.  The functions I am passing always return a single value.  Everything but the `3`, in that first argument is superfluous.
+The above code is weird.  Why would you ever do this?  
 
-The ability to pass a function as an argument becomes important when you do more than just `return 3` in the function you are passing.  What if the "argument function" has complicated behavior like making a call to a server to checks to see if the user is authenticated?  
+There really is no purpose to passing in those functions as arguments, I am just doing it to show that you can.  The functions I am passing always return a the same value.  Everything but the `3`, in that first argument is superfluous.
+
+The ability to pass a function as an argument becomes important when you do more than just `return 3` in the function you are passing.  What if the "argument function" has complicated behavior like making a call to a server to check to see if the user is authenticated?  
 
 Being able to pass a function as an argument to other functions lets you more easily separate concerns.  It should help you construct your programs in a more maintainable fashion.  
 
 You are also probably doing it already without recognizing it.
 
 ```javascript
+// figure 4.5
 // common jquery event code
 $('#foo').click(function(){
   $('#bar').hide()
@@ -85,6 +97,7 @@ $('#foo').click(function(){
 The above code attaches an event handler to DOM elements.  A function is passed as an argument to the `click` function, that "argument function" will be run whenever a click event occurs on a DOM element with the id of `foo`.
 
 ```javascript
+// figure 4.6
 // this is a lot different
 function adder_maker(a){
   var c = a
@@ -115,31 +128,9 @@ Here we assign the returned function `d` to the var `random_adder`.
 
 Now when you call `random_adder` many times you should get a new number each time.  This is because `Math.random()` is newly evaluated with each call of `random_adder` because a *reference* to the function `a` is stored as `c` and returned in the function `d` that we assign to the variable `random_adder`.
 
-### functions are objects
+### back to d3
 
-You can declare a function anywhere you could put a value.
-
-```javascript
-function foo(zomg){
-
-  bar(zomg)
-
-  // another function declaration inside an existing function
-  function bar(a){
-    console.log(a + ' hahah ' + a)
-  }
-
-}
-
-function baz(lol){
-  console.log(lol + ' hehehehe ' + lol)
-  // you cannot run bar() in this function because baz has no
-  // bar() to call, foo owns bar()
-}
-
-```
-
-In the first example
+In the first example...
 ```javascript
 // ...
 .attr('x', function(d,i){
@@ -148,52 +139,112 @@ In the first example
 // ...
 ```
 
-Why did we pass a function to the second argument of `attr`?  That function you pass as an argument is saved and attached to the `rect` element. (see [related d3 source code](https://github.com/mbostock/d3/blob/master/src/selection/attr.js#L58)).
+Why are we passing a function to the second argument of `attr`?  That function you pass as an argument is saved and attached to the `rect` element. (see [related d3 source code](https://github.com/mbostock/d3/blob/master/src/selection/attr.js#L58)).
 
-Why is the function saved and attached to the `rect` element?  The function is run for each element in the array you passed to `data()`.  It generally evaluates
-
-In the example above
+Why is the function saved and attached to the `rect` element?  The function is run for each element in the array you passed to `data()`.  
 
 ```javascript
+// figure 4.2 (again)
 var p = [ 3, 1, 4, 1, 5]
+
 var svg = d3.select('body').append('svg')
-svg.selectAll('g.foo')
+
+var elements = svg.selectAll('rect#foo')
   .data(p)
   .enter()
-    .append('g').attr('class','foo')
-      .append('rect')...
-      ...
+    .append('rect')
+    .attr('id', 'zomg')
+    .attr('x', function(d){
+      return (d*10.0) // what the heck is this?
+    })
+    .attr('y',0).attr('width',4).attr('height',200)
 ```
 
-Because you have 5 elements in your `p` array, you will append 5 `g` elements with the class `foo`.  One for each element in the `p` array.  Each of those `g` elements has a `rect` element appended.
+Because you have 5 elements in your `p` array, you will append 5 `rect` elements with the id `foo`.  One for each element in the `p` array.
 
-For every `rect` element that is appended to the svg, the anonymous in-line callback function you passed as the second argument, is run when the `x` attribute is set for that `rect`.  Each time that function is run, the elements in the `p` array are passed as arguments to the function.
+For every `rect` element that is appended to the svg the anonymous in-line callback function, you passed as the second argument to the `attr` function, is run when the `x` attribute is being set for each `rect`.  Each time that function is run, the elements in the `p` array are passed as arguments to the anonymous function, and whatever that function returns determines the `x` attribute value.
 
 ```javascript
+// figure 4.7
 // example
-function(3,0){  // run the function, pass in p[0] and 0
+// first rect is created
+function(3){  // run the function, pass in p[0]
   return (3*10) // 30
 }
-function(1,1){  // run the function, pass in p[1] and 1
+
+// second rect is created
+function(1){  // run the function, pass in p[1]
   return (1*10) // 10
 }
-function(4,2){  // run the function, pass in p[2] and 2
+
+// third rect is created
+function(4){  // run the function, pass in p[2]
   return (4*10) // 40
 }
-function(1,3){  // run the function, pass in p[3] and 3
-  return (3*10) // 30
+
+// fourth rect is created
+function(1){  // run the function, pass in p[3]
+  return (1*10) // 10
 }
-function(5,4){  // run the function, pass in p[4] and 4
+
+// fifth rect is created
+function(5){  // run the function, pass in p[4]
   return (5*10) // 50
 }
 ```
 
-* * *
+The results of running the code from `Figure 4.2` are below.
 
+```javascript
+// figure 4.8
+<svg>
+  <rect id='zomg' x=30 y=0 width=4 height=200></rect>
+  <rect id='zomg' x=10 y=0 width=4 height=200></rect>
+  <rect id='zomg' x=40 y=0 width=4 height=200></rect>
+  <rect id='zomg' x=10 y=0 width=4 height=200></rect>
+  <rect id='zomg' x=50 y=0 width=4 height=200></rect>
+</svg>
+```
 
+### why go through all the trouble of this?
 
+#### easier transitions
 
+If you follow the pattern during an `update > transition` cycle, you can just call `data` again, pass in a new array, call `transition`, then list attributes.
 
+```javascript
+// figure 4.9
+// update the bound data
+elements.data([ 1, 2, 3, 6, 8])
 
+elements.transition()
+  .delay(1000)
+  .duration(3000)
+  .attr('x', function(d) { return (d*10.0) })
+```
 
-The usual chain of functions for a d3js visualization can seem to come to an abrupt end with the introduction of the word `function`.  For some students their brain shuts down
+Now all the elements will have updated `x` attributes and transition to new positions on the screen.  The code `function(d) { return (d*10.0) }` will be evaluated again for each element in the `data` array.
+
+```javascript
+// figure 4.10
+// new x attributes from new data array [1,2,3,6,8]
+<svg>  //           \/ here
+  <rect id='zomg' x=10 y=0 width=4 height=200></rect>
+  <rect id='zomg' x=20 y=0 width=4 height=200></rect>
+  <rect id='zomg' x=30 y=0 width=4 height=200></rect>
+  <rect id='zomg' x=60 y=0 width=4 height=200></rect>
+  <rect id='zomg' x=80 y=0 width=4 height=200></rect>
+</svg>
+```
+
+#### better understanding of javascript in general
+
+If you already understood functions as arguments, assigning functions to values, and the overall idea of a [function as a first-class citizen](https://en.wikipedia.org/wiki/First-class_function), then I'm sorry if I talked down to you during this article.
+
+Most d3 programmers begin in a world where this is not a common programming pattern.  Callbacks are usually the domain of network operations and other I/O. If you fully understood the [javascript callback pattern](http://callbackhell.com/) before starting with D3, then you had one less roadblock on the seemingly steep D3 learning curve.
+
+### copy-pasta
+
+`window.onload = function(){ ...` is easy to write, and it works even when you don't know what it is doing. You don't have to know that you are assigning an anonymous callback function to the window event handler.  Your code in between the `{}` brackets will work just fine.
+
+On the other hand, you can't use D3 effectively if you don't know when to pass a callback, and when to just pass a value.  D3 will also be a minefield of frustration if you use [data-binding](http://alignedleft.com/tutorials/d3/binding-data) but don't understand that the data you are binding is later used as the argument of an callback function you also write.
