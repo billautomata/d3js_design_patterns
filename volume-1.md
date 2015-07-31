@@ -98,7 +98,7 @@ We will write a function `main` that accepts our data array, parses it based on 
 
 What makes this design pattern useful is that the function returns the elements of the graph itself, and an interface function other code can use to update the elements without having to know anything about those elements.
 
-##### psuedo-code
+##### pseudo-code
 ```javascript
 function chart(dataset (array), category (string)){
 
@@ -157,7 +157,7 @@ function chart(data,category){
 }
 ```
 
-##### psuedo-code
+##### pseudo-code
 
 `create_tallies` is a function that programmatically builds a javascript object by
 * creating an empty object to return
@@ -243,7 +243,7 @@ The visualization code here is not very graphical.  Running this code produces a
 * red: -1
 * green: -1
 
-##### psuedo-code
+##### pseudo-code
 
 1. select the body
 2. for each `key` found in the counts object
@@ -285,7 +285,7 @@ function chart(data,category){
 
 }
 ```
-##### psuedo-code
+##### pseudo-code
 
 1. create a set of `new_counts` from an array
 2. for each `selector` in the `update_selectors` array
