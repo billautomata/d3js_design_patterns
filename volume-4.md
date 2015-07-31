@@ -79,7 +79,7 @@ var a = add(function(){ return 3 }, function(){ return 1 })
 
 The above code is weird.  Why would you ever do this?  
 
-There really is no purpose to passing in those functions as arguments, I am just doing it to show that you can.  The functions I am passing always return a the same value.  Everything but the `3`, in that first argument is superfluous.
+There really is no purpose to passing in those functions as arguments, I am just doing it to show that you can.  The functions I am passing always return the same value.  Everything but the `3`, in that first argument is superfluous.
 
 The ability to pass a function as an argument becomes important when you do more than just `return 3` in the function you are passing.  What if the "argument function" has complicated behavior like making a call to a server to check to see if the user is authenticated?  
 
