@@ -102,7 +102,7 @@ The above code attaches an event handler to DOM elements.  A function is passed 
 function adder_maker(a){
   var c = a
   return function d(b){
-    return c() + v
+    return c() + b
   }
 }
 
