@@ -1,8 +1,10 @@
-# What can you do with a selection?
+# Practical applications of a d3js selection.
 
 D3 returns a javascript object when you call `d3.append()` `d3.select()` and `d3.selectAll()`.  This javascript object is referred to as a selection.
 
 The selection is your entry point for finding, creating, and removing DOM [elements](https://developer.mozilla.org/en-US/docs/Web/API/SVGElement). You also use selections to apply styles and attributes that dictate how those elements appear on the page and respond to events.
+
+The [official](https://github.com/mbostock/d3/wiki/Selections) documentation is fantastic but can be dense.  This purpose of this article is to cover the most practical applications of the fundamental D3 component.
 
 ```javascript
 // create a selection by calling d3.select('tagname')
