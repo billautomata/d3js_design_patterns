@@ -14,7 +14,7 @@ The concepts are difficult for a beginner to comprehend. I would also argue the 
 
 If you find this model a roadblock to getting started, or if you just prefer not to use it in your d3 programs, you can easily ignore it.
 
-###[example](http://codepen.io/billautomata/pen/zGapOR/)
+### [example](http://codepen.io/billautomata/pen/zGapOR/)
 
 ```javascript
 // our data array

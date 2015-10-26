@@ -1,4 +1,4 @@
-#d3js and the first-class function
+# d3js and the first-class function
 
 Passing a function as an argument to other functions is a difficult concept to understand for beginners, especially those coming from other languages.  D3 further compounds this difficulty by making the functions-as-arguments model integral to the basic pattern, but doesn't force the designer to understand what the heck is going on when they type `function` in the middle of their code.  
 
@@ -16,7 +16,7 @@ Instead of learning what the underlying code is doing, some just blindly type...
 
 This article will try to make sure it doesn't happen again.  We will cover what d3 is doing when you pass a function instead of a value.  By the end you will have a better understanding of a wonderfully useful part of javascript.
 
-### function(d,i){ return d; }
+### `function(d,i){ return d; }`
 
 Almost all D3 code takes this form:
 
@@ -43,10 +43,10 @@ In the above code we create an `svg` element.  Then append a series of `rect` el
 
 When creating that `rect` element we set the `id` [attribute](https://developer.mozilla.org/en-US/docs/Web/SVG/Attribute) to a string, `'zomg'`.  `'zomg'` is a value, like `0` or `true`.  That value is passed as the second argument in the `attr()` call.
 
-###`attr(name, value)`
+### `attr(name, value)`
 
 In the next line of code where we call `attr` and set the `x` attribute, instead of passing in a value like the number `108.1`, I pass a function as an argument.  
-###`attr(name, function(){ return value })`
+### `attr(name, function(){ return value })`
 
 ### usually
 
@@ -102,7 +102,7 @@ The above code attaches an event handler to DOM elements.  A function is passed 
 function adder_maker(a){
   var c = a
   return function d(b){
-    return c() + v
+    return c() + b
   }
 }
 
