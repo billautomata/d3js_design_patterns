@@ -1,3 +1,5 @@
+# `NOTE :: ` These are old, and apply to version 3 of D3.  Read at your own risk.
+
 # d3js design patterns
 
 collection of articles about how to write better d3js programs
