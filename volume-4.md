@@ -195,14 +195,14 @@ function(5){  // run the function, pass in p[4]
 
 The results of running the code from `Figure 4.2` are below.
 
-```javascript
+```html
 // figure 4.8
 <svg>
-  <rect id='zomg' x=30 y=0 width=4 height=200></rect>
-  <rect id='zomg' x=10 y=0 width=4 height=200></rect>
-  <rect id='zomg' x=40 y=0 width=4 height=200></rect>
-  <rect id='zomg' x=10 y=0 width=4 height=200></rect>
-  <rect id='zomg' x=50 y=0 width=4 height=200></rect>
+  <rect id='zomg' x='30' y='0' width='4' height='200' />
+  <rect id='zomg' x='10' y='0' width='4' height='200' />
+  <rect id='zomg' x='40' y='0' width='4' height='200' />
+  <rect id='zomg' x='10' y='0' width='4' height='200' />
+  <rect id='zomg' x='50' y='0' width='4' height='200' />
 </svg>
 ```
 
@@ -225,15 +225,15 @@ elements.transition()
 
 Now all the elements will have updated `x` attributes and transition to new positions on the screen.  The code `function(d) { return (d*10.0) }` will be evaluated again for each element in the `data` array.
 
-```javascript
+```html
 // figure 4.10
 // new x attributes from new data array [1,2,3,6,8]
-<svg>  //           \/ here
-  <rect id='zomg' x=10 y=0 width=4 height=200></rect>
-  <rect id='zomg' x=20 y=0 width=4 height=200></rect>
-  <rect id='zomg' x=30 y=0 width=4 height=200></rect>
-  <rect id='zomg' x=60 y=0 width=4 height=200></rect>
-  <rect id='zomg' x=80 y=0 width=4 height=200></rect>
+<svg>  //            \/ here
+  <rect id='zomg' x='10' y='0' width='4' height='200' />
+  <rect id='zomg' x='20' y='0' width='4' height='200' />
+  <rect id='zomg' x='30' y='0' width='4' height='200' />
+  <rect id='zomg' x='60' y='0' width='4' height='200' />
+  <rect id='zomg' x='80' y='0' width='4' height='200' />
 </svg>
 ```
 

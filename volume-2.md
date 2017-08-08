@@ -38,9 +38,7 @@ example1.selectAll('div.foo')
   .append('div')
   .attr('class', 'foo')
   .style('background-color', 'white')
-  .html(function(d) {
-    return d;
-  })
+  .html(String)
 
 // performing the same transition on all elements
 d3.selectAll('div.foo')
